@@ -3,8 +3,13 @@ const router = express.Router();
 const Post = require('../models/post');
 
 
-router.get('/', (req,res) => {
-    res.render('index')
+router.get('/', async (req,res) => {
+    try {
+        const data = await Post.find()
+        res.render('index', {data})
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 router.post('/send', async (req, res) => {

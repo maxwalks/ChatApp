@@ -1,0 +1,13 @@
+<% data.forEach(post => { %>
+    <div class="container mt-4">
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">User</div>
+              <%= post.message %>
+            </div>
+            <span class="badge bg-primary rounded-pill"><%= post.timestamp.toDateString() %></span>
+          </li>
+        </ul>
+    </div>
+<% }) %>
