@@ -1,3 +1,23 @@
+<form action="/send" method="POST">
+  <div class="row align-items-start fixed-bottom" style="margin: 5px;">
+    <div class="col-11">
+      <input type="text" class="form-control" placeholder="Message" name="message">
+    </div>
+    <div class="col">
+      <button type="submit" class="btn btn-primary">Send</button>
+    </div>
+  </div>
+</form>
+<ul>
+  <% if (user) { %>
+    <li>Welcome, <%= user.username %>
+    </li>
+    <li><a href="/logout">Log out</a></li>
+    <% } else { %>
+      <li><a href="/login">Log in</a></li>
+      <li><a href="/signup" class="btn">Sign up</a></li>
+      <% } %>
+</ul>
 <% data.forEach(post => { %>
     <div class="container mt-4">
         <ul class="list-group">
