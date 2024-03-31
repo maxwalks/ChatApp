@@ -8,6 +8,9 @@ function errorHandler(err, req, res, next) {
   if (err.message === "incorrect password") {
     res.status(500).json({ error : "Incorrect password."})
   }
+  if (err.message === "incorrect username") {
+    res.status(500).json({ error : "User not found."})
+  }
   console.error(err.stack);
   res.status(500).json({ error: "Internal Server Error" });
 }
