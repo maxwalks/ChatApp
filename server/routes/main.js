@@ -5,7 +5,6 @@ const User = require('../models/User');
 const { requireAuth, checkUser } = require('../../middleware/authMiddleware');
 const authController = require('../../controllers/authController');
 const jwt = require('jsonwebtoken')
-const getUserId = require('../../app')
 
 router.get('/signup', authController.signup_get);
 router.post('/signup', authController.signup_post);

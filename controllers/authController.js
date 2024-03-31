@@ -24,32 +24,30 @@ module.exports.login_get = (req, res) => {
   res.render('login', {user});
 }
 
-module.exports.signup_post = async (req, res) => {
-  const { username, password } = req.body;
-
+module.exports.signup_post = async (req, res, next) => {
   try {
+    const { username, password } = req.body;
+
     const user = await User.create({ username, password });
     const token = createToken(user._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(201).json({ user: user._id });
+    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.redirect("/login");
+  } catch (error) {
+    next(error)
   }
-  catch(err) {
-    console.log(err)
-  }
- 
 }
 
-module.exports.login_post = async (req, res) => {
+module.exports.login_post = async (req, res, next) => {
   const { username, password } = req.body;
 
   try {
     const user = await User.login(username, password);
     const token = createToken(user._id);
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(200).json({ user: user._id });
+    res.redirect('/')
   } 
-  catch (err) {
-    console.log(err)
+  catch (error) {
+    next(error)
   }
 
 }

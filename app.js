@@ -5,7 +5,8 @@ const connectDB = require('./server/config/db')
 const app = express();
 const cookieParser = require('cookie-parser');
 const { checkUser } = require('./middleware/authMiddleware');
-const User = require('./server/models/User')
+const User = require('./server/models/User');
+const errorHandler = require("./middleware/errorHandler");
 
 const PORT = 3000 
 
@@ -22,6 +23,7 @@ app.set('view engine', 'ejs');
 
 app.use('/', require('./server/routes/main'));
 app.get('*', checkUser);
+app.use(errorHandler)
 
 app.listen(PORT,()=>{
     console.log(`App listening on port ${PORT}`)
