@@ -5,6 +5,7 @@ const connectDB = require('./server/config/db')
 const app = express();
 const cookieParser = require('cookie-parser');
 const { checkUser } = require('./middleware/authMiddleware');
+const User = require('./server/models/User')
 
 const PORT = 3000 
 

@@ -8,22 +8,12 @@
     </div>
   </div>
 </form>
-<ul>
-  <% if (user) { %>
-    <li>Welcome, <%= user.username %>
-    </li>
-    <li><a href="/logout">Log out</a></li>
-    <% } else { %>
-      <li><a href="/login">Log in</a></li>
-      <li><a href="/signup" class="btn">Sign up</a></li>
-      <% } %>
-</ul>
 <% data.forEach(post => { %>
     <div class="container mt-4">
         <ul class="list-group">
           <li class="list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
-              <div class="fw-bold">User</div>
+              <div class="fw-bold"><%= post.author %></div>
               <%= post.message %>
             </div>
             <span class="badge bg-primary rounded-pill"><%= post.timestamp.toDateString() %></span>

@@ -5,6 +5,7 @@ const User = require('../models/User');
 const { requireAuth, checkUser } = require('../../middleware/authMiddleware');
 const authController = require('../../controllers/authController');
 const jwt = require('jsonwebtoken')
+const getUserId = require('../../app')
 
 router.get('/signup', authController.signup_get);
 router.post('/signup', authController.signup_post);
@@ -16,12 +17,12 @@ router.get('/', requireAuth, async (req, res) => {
     try {
         const data = await Post.find()
         const token = req.cookies.jwt;
-        jwt.verify(token, "net ninja secret", async (err, decodedToken) => {
+        jwt.verify(token, "secret", async (err, decodedToken) => {
             const user = await User.findById(decodedToken.id);
             const locals = {
                 username: user.username
             }
-            res.render('index', {data, user})
+            res.render('index', {data, user, locals})
           });
     } catch (error) {
         console.log(error)
@@ -30,13 +31,18 @@ router.get('/', requireAuth, async (req, res) => {
 
 router.post('/send', async (req, res) => {
     try {
-        const NewMessage = new Post({
-            message : req.body.message
-        })
-        await Post.create(NewMessage)
-        res.redirect('/')
+        const token = req.cookies.jwt;
+        jwt.verify(token, "secret", async (err, decodedToken) => {
+            const user = await User.findById(decodedToken.id);
+            const NewMessage = new Post({
+                message : req.body.message,
+                author : user.username
+            })
+            await Post.create(NewMessage)
+            res.redirect('/')
+          });
     } catch (error) {
-        handleErrors()
+        console.log(error)
     }
 });
 

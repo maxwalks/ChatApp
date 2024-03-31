@@ -5,7 +5,7 @@ const UserCollection = require('../server/models/User')
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-  return jwt.sign({ id }, 'net ninja secret', {
+  return jwt.sign({ id }, 'secret', {
     expiresIn: maxAge
   });
 };

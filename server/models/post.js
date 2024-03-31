@@ -8,6 +8,10 @@ const PostSchema = mongoose.Schema({
     timestamp: {
         type: Date,
         default: Date.now
+    },
+    author: {
+        type: String,
+        ref: "user"
     }
 })
 
