@@ -8,16 +8,22 @@
     </div>
   </div>
 </form>
-<% data.forEach(post => { %>
+<div style="margin-bottom: 100px;">
+  <% data.forEach(post=> { %>
     <div class="container mt-4">
-        <ul class="list-group">
-          <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-              <div class="fw-bold"><%= post.author %></div>
-              <%= post.message %>
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">
+              <%= post.author %>
             </div>
-            <span class="badge bg-primary rounded-pill"><%= post.timestamp.toDateString() %></span>
-          </li>
-        </ul>
+            <%= post.message %>
+          </div>
+          <span class="badge bg-primary rounded-pill">
+            <%= post.timestamp.toDateString() %>
+          </span>
+        </li>
+      </ul>
     </div>
-<% }) %>
+    <% }) %>
+</div>
