@@ -12,6 +12,9 @@
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Register</button>
+                <% if (typeof errorMessage !== "undefined") { %>
+                 <div class="alert alert-danger" style="margin-top: 10px;"><%= errorMessage %></div>
+                <% } %>
             </form>
         </div>
     </div>

@@ -28,7 +28,7 @@ router.get('/', requireAuth, async (req, res) => {
     }
 })
 
-router.post('/send', async (req, res) => {
+router.post('/send', requireAuth, async (req, res) => {
     try {
         const token = req.cookies.jwt;
         jwt.verify(token, "secret", async (err, decodedToken) => {

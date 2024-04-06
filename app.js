@@ -5,12 +5,17 @@ const connectDB = require('./server/config/db')
 const app = express();
 const cookieParser = require('cookie-parser');
 const { checkUser } = require('./middleware/authMiddleware');
-const User = require('./server/models/User')
-const Post = require('./server/models/post')
 const rateLimit = require('./middleware/ratelimit')
 const errorHandler = require("./middleware/errorHandler");
+const session = require('express-session')
 
 const PORT = 3000 
+
+app.use(session({
+    secret: process.env.SESSION_KEY,
+    resave: false,
+    saveUninitialized: true
+}));
 
 connectDB();
 app.use(express.urlencoded({ extended: true }));
