@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../server/models/User');
 const Post = require('../server/models/post')
-const UserCollection = require('../server/models/User')
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
@@ -11,17 +10,13 @@ const createToken = (id) => {
 };
 
 module.exports.signup_get = async (req, res) => {
-    try {
-        const user = await User.find()
-        res.render('register', {user})
-    } catch (error) {
-        console.log(error)
-    }
-}
+  const user = await User.find();
+  res.render("register", {user, errorMessage : undefined});
+};
 
 module.exports.login_get = (req, res) => {
-    const user = User.find()
-  res.render('login', {user});
+  const user = User.find()
+  res.render('login', {user, errorMessage : undefined});
 }
 
 module.exports.signup_post = async (req, res, next) => {

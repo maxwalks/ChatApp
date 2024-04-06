@@ -34,9 +34,9 @@ UserSchema.pre('save', async function(next) {
       if (auth) {
         return user;
       }
-      throw Error('incorrect password');
+      throw Error('Incorrect password.');
     }
-    throw Error('incorrect username');
+    throw Error('User not found.');
   };
 
 module.exports = mongoose.model('User', UserSchema)

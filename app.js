@@ -7,15 +7,8 @@ const cookieParser = require('cookie-parser');
 const { checkUser } = require('./middleware/authMiddleware');
 const rateLimit = require('./middleware/ratelimit')
 const errorHandler = require("./middleware/errorHandler");
-const session = require('express-session')
 
 const PORT = 3000 
-
-app.use(session({
-    secret: process.env.SESSION_KEY,
-    resave: false,
-    saveUninitialized: true
-}));
 
 connectDB();
 app.use(express.urlencoded({ extended: true }));
