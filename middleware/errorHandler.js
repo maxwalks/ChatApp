@@ -1,17 +1,19 @@
 const User = require('../server/models/User');
 
-async function errorHandler(err, req, res, next) {
+async function errorHandler(error, req, res, next) {
   const user = User.find()
-  if (err.code === 11000) {
+  if (error.code === 11000) {
     res.render('register', {errorMessage: "Username already exists.", user})
-  } else if (err.name === "ValidationError") {
+  } else if (error.name === "ValidationError") {
     res.render('register', {errorMessage: "Minimum password length is 4 characters.", user})
-  } else if (err.message === "Incorrect password.") {
+  } else if (error.message === "Incorrect password.") {
     res.render('login', {errorMessage: err.message, user})
-  } else if (err.message === "User not found.") {
+  } else if (error.message === "User not found.") {
     res.render('login', {errorMessage: err.message, user})
+  } else if (error.message == "Cannot read properties of null (reading 'username')") {
+    res.redirect('/login')
   } else {
-    console.error(err.stack);
+    console.error(error.stack);
     res.status(500).json({ error: "Internal Server Error."})
   }
 }
