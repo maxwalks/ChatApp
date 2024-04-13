@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const User = require('../server/models/User');
-const Post = require('../server/models/post')
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
@@ -10,8 +9,12 @@ const createToken = (id) => {
 };
 
 module.exports.signup_get = async (req, res) => {
-  const user = await User.find();
-  res.render("register", { user });
+  try {
+    const user = await User.find();
+    res.render("register", {user, errorMessage : undefined});
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 module.exports.login_get = (req, res) => {
@@ -19,7 +22,7 @@ module.exports.login_get = (req, res) => {
     const user = User.find()
     res.render('login', {user, errorMessage : undefined});
   } catch (error) {
-    next(error)
+    console.log(error)
   }
 }
 
@@ -30,7 +33,7 @@ module.exports.signup_post = async (req, res, next) => {
     const user = await User.create({ username, password });
     const token = createToken(user._id);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.redirect("/login");
+    res.redirect("/");
   } catch (error) {
     next(error)
   }
@@ -38,7 +41,6 @@ module.exports.signup_post = async (req, res, next) => {
 
 module.exports.login_post = async (req, res, next) => {
   const { username, password } = req.body;
-
   try {
     const user = await User.login(username, password);
     const token = createToken(user._id);

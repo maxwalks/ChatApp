@@ -5,15 +5,16 @@ const connectDB = require('./server/config/db')
 const app = express();
 const cookieParser = require('cookie-parser');
 const { checkUser } = require('./middleware/authMiddleware');
-const User = require('./server/models/User')
-const Post = require('./server/models/post')
-const rateLimit = require('./middleware/ratelimit')
 const errorHandler = require("./middleware/errorHandler");
+const helmet = require('helmet');
+const ratelimit = require("./middleware/ratelimit");
 
+app.use(ratelimit)
 const PORT = 3000 
 
 connectDB();
 app.use(express.urlencoded({ extended: true }));
+app.use(helmet())
 app.use(express.json()); 
 app.use(cookieParser())
 
@@ -26,7 +27,6 @@ app.set('view engine', 'ejs');
 app.use('/', require('./server/routes/main'));
 app.get('*', checkUser);
 app.use(errorHandler)
-app.use(rateLimit)
 
 app.listen(PORT,()=>{
     console.log(`App listening on port ${PORT}`)

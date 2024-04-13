@@ -4,7 +4,7 @@ const Post = require('../models/post');
 const User = require('../models/User');
 const { requireAuth, checkUser } = require('../../middleware/authMiddleware');
 const authController = require('../../controllers/authController');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 router.get('/signup', authController.signup_get);
 router.post('/signup', authController.signup_post);
@@ -28,7 +28,7 @@ router.get('/', requireAuth, async (req, res) => {
     }
 })
 
-router.post('/send', async (req, res) => {
+router.post('/send', requireAuth, async (req, res) => {
     try {
         const token = req.cookies.jwt;
         jwt.verify(token, "secret", async (err, decodedToken) => {
