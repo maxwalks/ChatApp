@@ -6,7 +6,6 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const { checkUser } = require('./middleware/authMiddleware');
 const errorHandler = require("./middleware/errorHandler");
-const helmet = require('helmet');
 const ratelimit = require("./middleware/ratelimit");
 
 app.use(ratelimit)
@@ -14,7 +13,6 @@ const PORT = 3000
 
 connectDB();
 app.use(express.urlencoded({ extended: true }));
-app.use(helmet())
 app.use(express.json()); 
 app.use(cookieParser())
 
