@@ -33,14 +33,12 @@ module.exports.login_post = async (req, res, next) => {
   try {
     const user = await User.login(username, password);
     const token = createToken(user._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.redirect('/')
-  } 
-  catch (error) {
-    next(error)
+    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.redirect("/");
+  } catch (error) {
+    next(error);
   }
-
-}
+};
 
 module.exports.logout_get = (req, res) => {
   res.cookie('jwt', '', { maxAge: 1 });

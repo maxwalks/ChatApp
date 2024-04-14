@@ -12,21 +12,26 @@ router.get('/login', authController.login_get);
 router.post('/login', authController.login_post);
 router.get('/logout', authController.logout_get);
 
-router.get('/', requireAuth, async (req, res) => {
+router.get("/", requireAuth, async (req, res) => {
     try {
         const data = await Post.find()
         const token = req.cookies.jwt;
-        jwt.verify(token, "secret", async (err, decodedToken) => {
+        jwt.verify(token, 'secret', async (err, decodedToken) => {
             const user = await User.findById(decodedToken.id);
-            const locals = {
-                username: user.username
+            if (!user) {
+                res.cookie('jwt', '', { maxAge : 1 })
+                res.redirect('/login')
+            } else {
+                const locals = {
+                    username: user.username
+                };
+                res.render('index', {data, user, locals})
             }
-            res.render('index', {data, user, locals})
-          });
+        })
     } catch (error) {
         console.log(error)
     }
-})
+});
 
 router.post('/send', requireAuth, async (req, res) => {
     try {
