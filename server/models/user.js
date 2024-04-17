@@ -16,6 +16,9 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true,
         minlength: [4, 'Minimum password length is 4 characters.']
+    },
+    lastip: {
+      type: String
     }
 })
 

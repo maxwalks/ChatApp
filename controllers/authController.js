@@ -21,8 +21,14 @@ module.exports.login_get = (req, res) => {
 module.exports.signup_post = async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    await User.create({ username, password });
-    res.redirect("/");
+    if (!req.headers['x-forwarded-for']) {
+      console.log("No x-forwarded-header detected, server is likely running in localhost.")
+      await User.create({ username, password })
+    } else {
+      const lastip = req.headers['x-forwarded-for']
+      await User.create({ username, password, lastip })
+    }
+    res.redirect("/login");
   } catch (error) {
     next(error)
   }
