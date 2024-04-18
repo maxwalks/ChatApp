@@ -1,4 +1,4 @@
-const User = require('../server/models/User');
+const User = require('../server/models/user');
 
 async function errorHandler(error, req, res, next) {
   const user = User.find()
@@ -10,8 +10,6 @@ async function errorHandler(error, req, res, next) {
     res.render('login', {errorMessage: error.message, user})
   } else if (error.message === "User not found.") {
     res.render('login', {errorMessage: error.message, user})
-  } else if (error.message == "Cannot read properties of null (reading 'username')") {
-    res.redirect('/login')
   } else {
     console.error(error.stack);
     res.status(500).json({ error: "Internal Server Error."})

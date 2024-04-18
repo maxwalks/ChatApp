@@ -11,6 +11,7 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true,
         unique: [true, "This username already exists."],
+        lowercase: true
     },
     password: {
         type: String,
@@ -25,21 +26,21 @@ const UserSchema = mongoose.Schema({
 
 
 UserSchema.pre('save', async function(next) {
-    const salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
-  });
+  const salt = await bcrypt.genSalt();
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
 
-  UserSchema.statics.login = async function(username, password) {
-    const user = await this.findOne({ username });
-    if (user) {
-      const auth = await bcrypt.compare(password, user.password);
-      if (auth) {
-        return user;
-      }
-      throw Error('Incorrect password.');
+UserSchema.statics.login = async function(username, password) {
+  const user = await this.findOne({ username });
+  if (user) {
+    const auth = await bcrypt.compare(password, user.password);
+    if (auth) {
+      return user;
     }
-    throw Error('User not found.');
-  };
+    throw Error('Incorrect password.');
+  }
+  throw Error('User not found.');
+};
 
 module.exports = mongoose.model('User', UserSchema)
