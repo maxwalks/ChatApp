@@ -20,6 +20,13 @@ const UserSchema = mongoose.Schema({
     },
     lastip: {
       type: String
+    },
+    timestamp: {
+      type: Date,
+      default: Date.now
+    },
+    bio: {
+      type: String
     }
 })
 

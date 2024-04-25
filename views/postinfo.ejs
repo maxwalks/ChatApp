@@ -1,0 +1,32 @@
+<div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-12 col-xl-4">
+            <div class="card" style="border-radius: 15px;">
+                <div class="card-body text-center">
+                    <h4 class="mb-2">
+                        <%= author.username %>
+                    </h4>
+                    <p class="text-muted mb-4">
+                        <%= author.bio %>
+                    </p>
+                    <div class="mb-4 pb-2">
+                    </div>
+                    <a href="/">
+                        <button type="button" data-mdb-button-init data-mdb-ripple-init
+                            class="btn btn-primary btn-rounded btn-lg">
+                            Message now
+                        </button>
+                    </a>
+                    <div class="d-flex justify-content-center text-center mt-5 mb-2 ">
+                        <div class="px-3">
+                            <p class="mb-2 h5">
+                                <%= author.timestamp.toDateString() %>
+                            </p>
+                            <p class="text-muted mb-0">Account creation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

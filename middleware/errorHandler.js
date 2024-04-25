@@ -10,6 +10,8 @@ async function errorHandler(error, req, res, next) {
     res.render('login', {errorMessage: error.message, user})
   } else if (error.message === "User not found.") {
     res.render('login', {errorMessage: error.message, user})
+  } else if (error.name === "CastError") {
+    res.status(400).json({ error: "Invalid Post Id" })
   } else {
     console.error(error.stack);
     res.status(500).json({ error: "Internal Server Error."})
