@@ -2,13 +2,28 @@
     <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="/settings">Settings</a>
     </li>
+    <li class="nav-item">
+        <a href="/settings/security" aria-current="page" class="nav-link text-reset">Security</a>
+    </li>
+    <div class="btn-group p-1">
+        <button type="button" class="btn btn-outline-success">Account</button>
+        <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="visually-hidden">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="/login">Login</a></li>
+          <li><a class="dropdown-item" href="/signup">Register</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="/logout">Logout</a></li>
+        </ul>
+    </div>
 </ul>
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <form action="/update" method="POST">
                 <div class="mb-3">
-                    <label for="input" class="form-label">Password</label>
+                    <label for="input" class="form-label">Bio</label>
                     <input type="input" class="form-control" id="input" name="input" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>

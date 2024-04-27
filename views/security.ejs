@@ -1,0 +1,53 @@
+<ul class="nav nav-underline">
+    <li class="nav-item">
+        <a class="nav-link text-reset" aria-current="page" href="/settings">Settings</a>
+    </li>
+    <li class="nav-item">
+        <a href="/settings/security" aria-current="page" class="nav-link active">Security</a>
+    </li>
+    <div class="btn-group p-1">
+        <button type="button" class="btn btn-outline-success">Account</button>
+        <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="visually-hidden">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="/login">Login</a></li>
+          <li><a class="dropdown-item" href="/signup">Register</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</ul>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="mb-4">Change password</h2>
+            <form action="/updatepassword" method="POST">
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <i class="bi bi-eye-slash" id="togglePassword" role="button"></i>
+                </div>
+                <button type="submit" class="btn btn-primary" id="submit">Update</button>
+                <% if (typeof successMessage !== "undefined") { %>
+                    <div class="alert alert-success mt-3" role="alert">Password successfully changed.</div>
+                <% } %>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    const togglePassword = document
+        .querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+    togglePassword.addEventListener('click', () => {
+        // Toggle the type attribute using
+        // getAttribure() method
+        const type = password
+            .getAttribute('type') === 'password' ?
+            'text' : 'password';
+        password.setAttribute('type', type);
+        // Toggle the eye and bi-eye icon
+        this.classList.toggle('bi-eye');
+    });
+</script>
