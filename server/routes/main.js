@@ -67,7 +67,38 @@ router.post('/update', requireAuth, async (req, res, next) => {
           const filter = { _id: user._id }
           const update = { bio: req.body.input }
           await User.findOneAndUpdate(filter, update);
-          res.redirect("/settings");
+          res.render('settings', { user, successMessage : "Bio successfully updated." })
+        });
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.get('/post/:id', async (req, res, next) => {
+    try {
+        let slug = req.params.id;
+        const post = await Post.findOne({ _id: slug })
+        if(!post) {
+            res.status(404).json({ error : "Post not found." })
+        } else {
+            const token = req.cookies.jwt;
+            jwt.verify(token, "secret", async (err, decodedToken) => {
+              const user = await User.findById(decodedToken.id);
+              const author = await User.findOne({ username: post.author });
+              res.render("postinfo", { user, author });
+            });
+        }
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.get('/settings/security', requireAuth, (req, res, next) => {
+    try {
+        const token = req.cookies.jwt;
+        jwt.verify(token, "secret", async (err, decodedToken) => {
+          const user = await User.findById(decodedToken.id);
+          res.render("security", { user });
         });
     } catch (error) {
         next(error)
@@ -91,33 +122,6 @@ router.post('/updatepassword', requireAuth, (req, res, next) => {
                 res.render('security', {user, successMessage : "Password successfully updated."})
             }
         })
-    } catch (error) {
-        next(error)
-    }
-})
-
-router.get('/post/:id', async (req, res, next) => {
-    try {
-        let slug = req.params.id;
-        const post = await Post.findOne({ _id: slug })
-        const token = req.cookies.jwt;
-        jwt.verify(token, "secret", async (err, decodedToken) => {
-          const user = await User.findById(decodedToken.id);
-          const author = await User.findOne({ username: post.author });
-          res.render("postinfo", { user, author });
-        });
-    } catch (error) {
-        next(error)
-    }
-})
-
-router.get('/settings/security', requireAuth, (req, res, next) => {
-    try {
-        const token = req.cookies.jwt;
-        jwt.verify(token, "secret", async (err, decodedToken) => {
-          const user = await User.findById(decodedToken.id);
-          res.render("security", { user });
-        });
     } catch (error) {
         next(error)
     }

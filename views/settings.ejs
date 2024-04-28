@@ -27,6 +27,9 @@
                     <input type="input" class="form-control" id="input" name="input" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
+                <% if (typeof successMessage !== "undefined") { %>
+                 <div class="alert alert-success mt-3" role="alert"><%= successMessage %></div>
+                <% } %>
             </form>
         </div>
     </div>
