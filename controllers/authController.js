@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../server/models/user');
+const { userValidationRules, validate } = require("../middleware/validator")
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
