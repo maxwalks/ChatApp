@@ -16,8 +16,7 @@ async function errorHandler(error, req, res, next) {
     res.render("register", { user, errorMessage : "Password should not contain spaces and must be alphanumeric." })
   } else if (error.message == "usernameValidationError") {
     res.render("register", {user, errorMessage : "Username should not contain spaces and must be alphanumeric."})
-  }
-  else {
+  } else {
     console.error(error.stack);
     res.status(500).json({ error: "Internal Server Error."})
   }
