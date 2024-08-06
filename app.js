@@ -6,9 +6,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const { checkUser } = require('./middleware/authMiddleware');
 const errorHandler = require("./middleware/errorHandler");
-const ratelimit = require("./middleware/ratelimit");
 
-app.use(ratelimit)
 const PORT = 3000 
 
 connectDB();
